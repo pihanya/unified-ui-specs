@@ -15,6 +15,7 @@ Unified UI Specs defines a machine-readable standard for screen and flow specifi
 - 📘 [`knowledge/unified-ui-specs-standard.md`](knowledge/unified-ui-specs-standard.md) — Full narrative standard covering required sections, states, and traceability rules.
 - 🧮 `knowledge/unified-ui-specs-schema.json` — JSON Schema (draft 2020-12) enforcing the standard for machine validation.
 - 🧾 [`knowledge/unified-ui-specs-example.json`](knowledge/unified-ui-specs-example.json) — Reference implementation of a compliant screen spec.
+- 🧍 [`knowledge/unified-ui-specs-human-example.md`](knowledge/unified-ui-specs-human-example.md) — Human-readable walk-through of the sample spec.
 - 📰 `docs/article/` — Practitioner-friendly articles ([🇺🇸 English](docs/article/unified-ui-specs-article-en_US.md), [🇷🇺 Russian](docs/article/unified-ui-specs-article-ru_RU.md)).
 - 📄 `docs/paper/` — Extended research papers ([🇺🇸 English](docs/paper/unified-ui-specs-paper-en_US.md), [🇷🇺 Russian](docs/paper/unified-ui-specs-paper-ru_RU.md)).
 - 📚 `pdf/` — Exported PDF versions suitable for circulation.
@@ -24,6 +25,7 @@ Unified UI Specs defines a machine-readable standard for screen and flow specifi
 - 📘 Full standard text — [`knowledge/unified-ui-specs-standard.md`](knowledge/unified-ui-specs-standard.md)
 - 🧪 Example structured screen spec — [`Section 2`](knowledge/unified-ui-specs-standard.md#2-example-screen-spec) inside the standard document
 - 🧾 JSON representation — [`knowledge/unified-ui-specs-example.json`](knowledge/unified-ui-specs-example.json)
+- 🧍 Human-readable walkthrough — [`knowledge/unified-ui-specs-human-example.md`](knowledge/unified-ui-specs-human-example.md)
 
 ## 🚀 Getting started
 
