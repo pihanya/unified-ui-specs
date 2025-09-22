@@ -1,0 +1,223 @@
+{
+  "artifact_card": {
+    "id": "YMTL-Design-Screen-001",
+    "title": "Dual-Mode Architecture Specification",
+    "version": "v1.0.0",
+    "owners": ["@product", "@design", "@dev"],
+    "status": "Implemented",
+    "links": {
+      "figma": "figma-screen-dual-mode-choose",
+      "jira": "YMTL-1",
+      "prd": "PRD-001",
+      "personas": ["P01", "P02"],
+      "roadmap_release": "MVP"
+    },
+    "platforms": ["Android", "iOS", "Web"],
+    "citations": ["UTS UI Standard"]
+  },
+  "purpose_and_principles": {
+    "goal": "Provide a clear separation of clinical and wellness modes to serve users with distinct needs from therapy to daily wellness tracking.",
+    "kpis": [
+      {"name": "Mode Select Rate", "metric": "percent", "target_value": 85},
+      {"name": "Retention", "metric": "percent", "target_value": 25},
+      {"name": "PHQ-9 Completion", "metric": "ratio", "target_value": 1}
+    ],
+    "journey_context": "Displayed after onboarding; primary gateway screen to select mode.",
+    "hcd_alignment": [
+      "ISO 9241-210 (human-centred design)",
+      "ISO 9241-110 dialogue principles"
+    ]
+  },
+  "composition_and_hierarchy": {
+    "focus_order": ["header", "clinical_card", "wellness_card", "info_section", "footer.settings", "footer.help"],
+    "regions": [
+      {
+        "id": "header",
+        "required": true,
+        "components": [
+          {"type": "AppTitle", "slot": "center"},
+          {"type": "AvatarButton", "slot": "right", "optional": true}
+        ]
+      },
+      {
+        "id": "clinical_card",
+        "required": true,
+        "components": [{"type": "ModeCard", "key": "clinical"}]
+      },
+      {
+        "id": "wellness_card",
+        "required": true,
+        "components": [{"type": "ModeCard", "key": "wellness"}]
+      },
+      {
+        "id": "info_section",
+        "required": false,
+        "components": [{"type": "InfoLink"}]
+      },
+      {
+        "id": "footer",
+        "required": true,
+        "components": [
+          {"type": "FooterAction", "key": "settings"},
+          {"type": "FooterAction", "key": "help"}
+        ]
+      }
+    ],
+    "design_system_components": ["Card", "ButtonPrimary", "Icon", "Typography/Heading", "Typography/Body"]
+  },
+  "design_tokens": {
+    "source_type": "external",
+    "store": "tokens.json"
+  },
+  "states_and_variants": {
+    "states": ["default", "focus", "pressed", "disabled", "loading", "error", "success"],
+    "variants": ["light", "dark"]
+  },
+  "behavior_rules": {
+    "success_state": {
+      "indicator": "icon/Check topRight",
+      "transition": {"type": "slide", "ms": 300, "easing": "ease-in-out"}
+    },
+    "pressed_state": {"scale": 0.98, "opacity": 0.8}
+  },
+  "interactions": [
+    {
+      "event": "tap_card",
+      "condition": "mode.available==true",
+      "ui_action": ["highlightCard", "hapticLight"],
+      "navigation": "route:/mode/{clinical|wellness}",
+      "animation": "slide-right-300ms"
+    },
+    {
+      "event": "swipe_between_cards",
+      "condition": "platform in {tablet,desktop}",
+      "ui_action": ["showNextCard"],
+      "navigation": "none",
+      "animation": "fade-200ms"
+    },
+    {
+      "event": "long_press_card",
+      "condition": "always",
+      "ui_action": ["openModal:modeDetails"],
+      "navigation": "modal:/modeDetails",
+      "animation": "scale-up-250ms"
+    },
+    {
+      "event": "keyboard_enter",
+      "condition": "focusVisible==true",
+      "ui_action": ["selectMode"],
+      "navigation": "route:/mode/{clinical|wellness}",
+      "animation": "focusRingPulse-200ms"
+    },
+    {
+      "event": "tap_info",
+      "condition": "always",
+      "ui_action": ["openModal:modeDifferences"],
+      "navigation": "modal:/modeDifferences",
+      "animation": "fade-in-200ms"
+    },
+    {
+      "event": "tap_footer",
+      "condition": "always",
+      "ui_action": ["ripple"],
+      "navigation": "route:/settings|/help",
+      "animation": "scale-150ms"
+    }
+  ],
+  "accessibility": {
+    "touch_targets": {"ios_pt_min": 44, "android_dp_min": 48, "web_css_px_min": 24},
+    "focus_indicators": true,
+    "aria_support": ["button", "navigation"],
+    "aria_live_regions": ["polite"],
+    "labels": ["ИИ-Психолог", "ИИ-Терапевт", "Настройки", "Помощь"],
+    "contrast": {"ratio": 4.5, "level": "AA"},
+    "gesture_alternatives": true,
+    "keyboard_alternatives": true,
+    "voice_commands": true
+  },
+  "i18n": {
+    "icu_keys": [
+      "app_title",
+      "mode_selection_title",
+      "mode_info",
+      "settings",
+      "help",
+      "profile",
+      "mode_clinical_title",
+      "mode_clinical_description",
+      "mode_wellness_title",
+      "mode_wellness_description",
+      "common_start",
+      "state_loading",
+      "state_error",
+      "state_ready",
+      "state_disabled",
+      "state_active",
+      "cd_app_logo",
+      "cd_profile_icon",
+      "cd_help_icon",
+      "cd_info_icon",
+      "snackbar_mode_selected_clinical",
+      "snackbar_mode_selected_wellness"
+    ],
+    "constraints": "Mode descriptions ≤120 characters",
+    "rtl_support": true,
+    "icu_patterns": true,
+    "tone": "Supportive, empathetic",
+    "formatting_rules": "Use locale-specific date/time/currency formatting"
+  },
+  "analytics_plan": [
+    {"event": "mode_selection_screen_view", "properties": ["source", "previous_mode"], "owner": "@analytics", "pii": false, "pii_category": "none"},
+    {"event": "mode_selected", "properties": ["selected_mode", "selection_time"], "owner": "@product", "pii": false, "pii_category": "none"},
+    {"event": "mode_info_viewed", "properties": ["mode", "view_duration"], "owner": "@design", "pii": false, "pii_category": "none"},
+    {"event": "mode_switch_initiated", "properties": ["from_mode", "to_mode"], "owner": "@dev", "pii": false, "pii_category": "none"}
+  ],
+  "edge_cases": [
+    {"case": "no_history", "expected_behavior": "Show onboarding nudge", "expected_outcome": "fallback"},
+    {"case": "offline", "expected_behavior": "Use last cached mode", "expected_outcome": "fallback"},
+    {"case": "4xx_5xx", "expected_behavior": "Retry with backoff, fallback to local data", "expected_outcome": "retry"},
+    {"case": "partial_data", "expected_behavior": "Render skeletons then hydrate", "expected_outcome": "fallback"},
+    {"case": "multi_tap", "expected_behavior": "De-duplicate taps", "expected_outcome": "silent_ignore"}
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "scenario": "Successful clinical selection",
+      "given": "User is on Mode Selection",
+      "when": "User taps Clinical card",
+      "then": "App routes to Clinical Chat and logs event",
+      "gherkin_text": "Given user is on Mode Selection\nWhen user taps Clinical\nThen app routes to Clinical Chat\nAnd event mode_selected is logged",
+      "traceability_links": ["TC-001"]
+    },
+    {
+      "id": "AC-002",
+      "scenario": "Offline selection",
+      "given": "Device is offline",
+      "when": "User selects a mode",
+      "then": "Choice is cached and synced when online",
+      "gherkin_text": "Given device is offline\nWhen user selects a mode\nThen choice is cached\nAnd synced when network is available",
+      "traceability_links": ["TC-002"]
+    },
+    {
+      "id": "AC-003",
+      "scenario": "Contract validation",
+      "given": "API returns invalid mode",
+      "when": "App processes response",
+      "then": "Error state is shown and user retries",
+      "gherkin_text": "Given invalid mode in API response\nWhen processed\nThen error state shown\nAnd retry allowed",
+      "traceability_links": ["TC-003"]
+    }
+  ],
+  "data_contracts": [
+    {"method": "GET", "endpoint": "/api/user/preferences", "schema_ref": "UserPreferences", "timeout_ms": 5000, "retry_policy": "3 retries", "offline_cache": true},
+    {"method": "POST", "endpoint": "/api/user/mode-selection", "schema_ref": "ModeSelection", "timeout_ms": 5000, "retry_policy": "3 retries", "offline_cache": true},
+    {"method": "GET", "endpoint": "/api/content/mode-descriptions", "schema_ref": "ModeDescriptions", "timeout_ms": 5000, "retry_policy": "3 retries", "offline_cache": false}
+  ],
+  "traceability": {
+    "personas": ["P01 (Clinical user)", "P02 (Wellness user)"],
+    "prd": "PRD-001 (Dual-Mode Requirements)",
+    "requirements": [{"id": "REQ-ARC-001", "description": "Architecture Separation"}],
+    "test_cases": [{"id": "TC-001", "linked_req": "REQ-ARC-001"}, {"id": "TC-002", "linked_req": "REQ-ARC-001"}, {"id": "TC-003", "linked_req": "REQ-ARC-001"}],
+    "kpis": [{"id": "KPI-001", "description": "Mode Select Rate ≥85%"}, {"id": "KPI-002", "description": "Retention +25%"}]
+  }
+}

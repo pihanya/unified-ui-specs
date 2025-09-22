@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dual-Mode Architecture Specification (v4)",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Version of this schema section.",
+      "example": "v1.0"
+    },
+
+    "artifact_card": {
+      "type": "object",
+      "description": "Metadata card describing the artifact and links.",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "id": {"type": "string", "description": "Unique identifier of the artifact.", "example": "YMTL-ModeSelection-001"},
+        "title": {"type": "string", "description": "Title of the screen or artifact.", "example": "Mode Selection Screen"},
+        "version": {"type": "string", "description": "Semantic version of the artifact.", "pattern": "^v\\d+\\.\\d+\\.\\d+$", "example": "v1.3.0"},
+        "owners": {"type": "array", "description": "List of owners responsible for the artifact.", "items": {"type": "string"}, "example": ["@product", "@design", "@dev"]},
+        "status": {
+          "type": "string",
+          "description": "Current status of the artifact.",
+          "enum": ["Draft", "Ready", "Approved", "Implemented"],
+          "example": "Approved"
+        },
+        "links": {
+          "type": "object",
+          "description": "Cross references to external systems.",
+          "properties": {
+            "figma": {"type": "string"},
+            "jira": {"type": "string"},
+            "prd": {"type": "string"},
+            "personas": {"type": "array", "items": {"type": "string"}},
+            "roadmap_release": {"type": "string"},
+            "req": {"type": "array", "items": {"type": "string"}, "description": "Requirement IDs."},
+            "tc": {"type": "array", "items": {"type": "string"}, "description": "Test Case IDs."}
+          },
+          "required": ["figma", "jira", "prd", "personas", "roadmap_release"]
+        },
+        "platforms": {
+          "type": "array",
+          "description": "Supported platforms with OS/version constraints.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string", "example": "iOS"},
+              "min_version": {"type": "string", "example": "16"},
+              "notes": {"type": "string"}
+            },
+            "required": ["name", "min_version"]
+          }
+        },
+        "citations": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["id", "title", "version", "owners", "status", "links", "platforms", "citations"]
+    },
+
+    "purpose_and_principles": {
+      "type": "object",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "goal": {"type": "string"},
+        "kpis": {
+          "type": "array",
+          "description": "Structured KPI definitions with machine-verifiable thresholds.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "metric": {
+                "type": "string",
+                "enum": ["ms", "s", "percent", "ratio", "count"],
+                "description": "Unit of measurement."
+              },
+              "target_value": {"type": "number", "description": "Numeric value of KPI target"},
+              "statistic": {"type": "string", "enum": ["p50", "p90", "p95", "p99"], "description": "Applicable statistic for time/distributional metrics"}
+            },
+            "required": ["name", "metric", "target_value"]
+          }
+        },
+        "journey_context": {"type": "string"},
+        "hcd_alignment": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["goal", "kpis", "journey_context", "hcd_alignment"]
+    },
+
+    "composition_and_hierarchy": {
+      "type": "object",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "focus_order": {"type": "array", "items": {"type": "string"}},
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string"},
+              "required": {"type": "boolean"},
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {"type": "string"},
+                    "slot": {"type": "string"},
+                    "key": {"type": "string"},
+                    "optional": {"type": "boolean"}
+                  },
+                  "required": ["type"]
+                }
+              }
+            },
+            "required": ["id", "required", "components"]
+          }
+        },
+        "design_system_components": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["focus_order", "regions", "design_system_components"]
+    },
+
+    "design_tokens": {
+      "type": "object",
+      "description": "Unified token definition (direct DTCG or external store reference).",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "source_type": {"type": "string", "enum": ["inline", "external"], "description": "Defines whether tokens are inline or external."},
+        "store": {"type": "string", "description": "Path to external token store (DTCG JSON)"},
+        "tokens": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9/_-]+$": {
+              "type": "object",
+              "properties": {
+                "$value": {"type": ["string", "number", "object"]},
+                "$type": {
+                  "type": "string",
+                  "enum": ["color", "gradient", "dimension", "typography", "shadow", "radius", "space", "icon", "shape"]
+                },
+                "$description": {"type": "string"}
+              },
+              "required": ["$value", "$type"]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "oneOf": [
+        {"required": ["tokens", "source_type"]},
+        {"required": ["store", "source_type"]}
+      ]
+    },
+
+    "states_and_variants": {
+      "type": "object",
+      "description": "Interaction states, theme variants, and behavior definitions.",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "states": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["default", "hover", "focus", "pressed", "disabled", "loading", "error", "success", "empty", "invalid", "masked"]}
+        },
+        "variants": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["light", "dark"]}
+        }
+      },
+      "required": ["states", "variants"]
+    },
+
+    "behavior_rules": {
+      "type": "object",
+      "description": "Behavior rules split out from states and variants.",
+      "additionalProperties": {"type": "object"}
+    },
+
+    "interactions": {
+      "type": "array",
+      "description": "UI interactions and navigation mapping.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event": {"type": "string", "pattern": "^[a-z0-9]+_[a-z0-9]+$", "example": "mode_selected"},
+          "condition": {"type": "string"},
+          "ui_action": {"type": ["string", "array"], "items": {"type": "string"}},
+          "navigation": {"type": "string"},
+          "animation": {"type": "string"},
+          "analytics_event": {"type": "string"}
+        },
+        "required": ["event", "ui_action"]
+      }
+    },
+
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "touch_targets": {
+          "type": "object",
+          "properties": {
+            "ios_pt_min": {"type": "integer"},
+            "android_dp_min": {"type": "integer"},
+            "web_css_px_min": {"type": "integer"}
+          },
+          "required": ["ios_pt_min", "android_dp_min", "web_css_px_min"]
+        },
+        "focus_indicators": {"type": "boolean"},
+        "aria_support": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["button", "link", "navigation", "main", "form"]}
+        },
+        "aria_live_regions": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["off", "polite", "assertive"]}
+        },
+        "labels": {"type": "array", "items": {"type": "string"}},
+        "contrast": {
+          "type": "object",
+          "properties": {
+            "ratio": {"type": "number"},
+            "level": {"type": "string", "enum": ["AA", "AAA"]}
+          },
+          "required": ["ratio", "level"]
+        },
+        "gesture_alternatives": {"type": "boolean"},
+        "keyboard_alternatives": {"type": "boolean"},
+        "voice_commands": {"type": "boolean"}
+      },
+      "required": ["touch_targets", "focus_indicators", "contrast"]
+    },
+
+    "i18n": {
+      "type": "object",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "icu_keys": {"type": "array", "items": {"type": "string"}},
+        "constraints": {"type": "string"},
+        "rtl_support": {"type": "boolean"},
+        "icu_patterns": {"type": "boolean", "description": "Use ICU message formatting."},
+        "tone": {"type": "string", "description": "Tone guidelines (e.g., supportive, formal)."},
+        "formatting_rules": {"type": "string", "description": "Rules for numbers, dates, currencies."}
+      },
+      "required": ["icu_keys", "formatting_rules"]
+    },
+
+    "analytics_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event": {"type": "string", "pattern": "^[a-z0-9]+_[a-z0-9]+$", "example": "mode_selected"},
+          "properties": {"type": "array", "items": {"type": "string"}},
+          "owner": {"type": "string"},
+          "pii": {"type": "boolean"},
+          "pii_category": {"type": "string", "enum": ["none", "pseudonymous", "sensitive"]}
+        },
+        "required": ["event", "owner", "pii", "pii_category"]
+      }
+    },
+
+    "edge_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "case": {"type": "string"},
+          "expected_behavior": {"type": "string"},
+          "expected_outcome": {
+            "type": "string",
+            "enum": ["retry", "fallback", "error_message", "silent_ignore"],
+            "description": "Normalized expected outcome."
+          },
+          "trigger": {"type": "string"},
+          "fallback": {"type": "string"},
+          "retries": {"type": "integer"},
+          "logging": {"type": "boolean"},
+          "platform_overrides": {"type": "object", "additionalProperties": {"type": "string"}}
+        },
+        "required": ["case", "expected_behavior", "expected_outcome"]
+      }
+    },
+
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "scenario": {"type": "string"},
+          "given": {"type": "string"},
+          "when": {"type": "string"},
+          "then": {"type": "string"},
+          "gherkin_text": {"type": "string", "description": "Full Gherkin scenario text."},
+          "traceability_links": {"type": "array", "items": {"type": "string"}}
+        },
+        "required": ["id", "scenario", "given", "when", "then"]
+      }
+    },
+
+    "data_contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "method": {"type": "string", "enum": ["GET", "POST", "PUT", "DELETE"]},
+          "endpoint": {"type": "string"},
+          "schema_ref": {"type": "string"},
+          "timeout_ms": {"type": "integer"},
+          "retry_policy": {"type": "string"},
+          "offline_cache": {"type": "boolean"}
+        },
+        "required": ["method", "endpoint"]
+      }
+    },
+
+    "traceability": {
+      "type": "object",
+      "description": "Mapping to personas, PRDs, requirements, test cases, and KPIs.",
+      "properties": {
+        "schema_version": {"type": "string", "example": "v1.0"},
+        "personas": {"type": "array", "items": {"type": "string"}},
+        "prd": {"type": "string"},
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string", "pattern": "^REQ-[0-9]+$"},
+              "description": {"type": "string"}
+            },
+            "required": ["id"]
+          }
+        },
+        "test_cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string", "pattern": "^TC-[0-9]+$"},
+              "linked_req": {"type": "string", "pattern": "^REQ-[0-9]+$"}
+            },
+            "required": ["id"]
+          }
+        },
+        "kpis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string", "pattern": "^KPI-[0-9]+$"},
+              "description": {"type": "string"}
+            },
+            "required": ["id"]
+          }
+        }
+      },
+      "required": ["personas", "prd"]
+    }
+  },
+  "required": [
+    "artifact_card",
+    "purpose_and_principles",
+    "composition_and_hierarchy",
+    "design_tokens",
+    "states_and_variants",
+    "behavior_rules",
+    "interactions",
+    "accessibility",
+    "i18n",
+    "analytics_plan",
+    "edge_cases",
+    "acceptance_criteria",
+    "data_contracts",
+    "traceability"
+  ]
+}
