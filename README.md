@@ -50,5 +50,5 @@ ajv validate \
 - Add localized articles or PDFs inside `docs/` and `pdf/` as needed; keep filenames language-tagged (e.g. `en_US`, `ru_RU`).
 
 ## License
-This repository is provided for internal standardization. Apply your organization’s governance or licensing policy before redistribution.
-
+Released under the MIT License. See `LICENSE` for the full text; include the copyright notice in
+redistributions and acknowledge the software is provided "as is" without warranty.
