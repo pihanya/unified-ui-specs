@@ -1,18 +1,22 @@
 {
   "artifact_card": {
-    "id": "YMTL-Design-Screen-001",
+    "id": "UUISS-Design-Screen-001",
     "title": "Dual-Mode Architecture Specification",
     "version": "v1.0.0",
     "owners": ["@product", "@design", "@dev"],
     "status": "Implemented",
     "links": {
       "figma": "figma-screen-dual-mode-choose",
-      "jira": "YMTL-1",
+      "jira": "UUISS-1",
       "prd": "PRD-001",
       "personas": ["P01", "P02"],
       "roadmap_release": "MVP"
     },
-    "platforms": ["Android", "iOS", "Web"],
+    "platforms": [
+      {"name": "Android", "min_version": "13"},
+      {"name": "iOS", "min_version": "16"},
+      {"name": "Web", "min_version": "Chrome 120"}
+    ],
     "citations": ["UTS UI Standard"]
   },
   "purpose_and_principles": {
@@ -89,14 +93,14 @@
       "animation": "slide-right-300ms"
     },
     {
-      "event": "swipe_between_cards",
+      "event": "swipe_cards",
       "condition": "platform in {tablet,desktop}",
       "ui_action": ["showNextCard"],
       "navigation": "none",
       "animation": "fade-200ms"
     },
     {
-      "event": "long_press_card",
+      "event": "long_press",
       "condition": "always",
       "ui_action": ["openModal:modeDetails"],
       "navigation": "modal:/modeDetails",
@@ -167,10 +171,10 @@
     "formatting_rules": "Use locale-specific date/time/currency formatting"
   },
   "analytics_plan": [
-    {"event": "mode_selection_screen_view", "properties": ["source", "previous_mode"], "owner": "@analytics", "pii": false, "pii_category": "none"},
+    {"event": "screen_view", "properties": ["source", "previous_mode"], "owner": "@analytics", "pii": false, "pii_category": "none"},
     {"event": "mode_selected", "properties": ["selected_mode", "selection_time"], "owner": "@product", "pii": false, "pii_category": "none"},
-    {"event": "mode_info_viewed", "properties": ["mode", "view_duration"], "owner": "@design", "pii": false, "pii_category": "none"},
-    {"event": "mode_switch_initiated", "properties": ["from_mode", "to_mode"], "owner": "@dev", "pii": false, "pii_category": "none"}
+    {"event": "info_viewed", "properties": ["mode", "view_duration"], "owner": "@design", "pii": false, "pii_category": "none"},
+    {"event": "mode_switched", "properties": ["from_mode", "to_mode"], "owner": "@dev", "pii": false, "pii_category": "none"}
   ],
   "edge_cases": [
     {"case": "no_history", "expected_behavior": "Show onboarding nudge", "expected_outcome": "fallback"},
@@ -216,8 +220,8 @@
   "traceability": {
     "personas": ["P01 (Clinical user)", "P02 (Wellness user)"],
     "prd": "PRD-001 (Dual-Mode Requirements)",
-    "requirements": [{"id": "REQ-ARC-001", "description": "Architecture Separation"}],
-    "test_cases": [{"id": "TC-001", "linked_req": "REQ-ARC-001"}, {"id": "TC-002", "linked_req": "REQ-ARC-001"}, {"id": "TC-003", "linked_req": "REQ-ARC-001"}],
+    "requirements": [{"id": "REQ-001", "description": "Architecture Separation"}],
+    "test_cases": [{"id": "TC-001", "linked_req": "REQ-001"}, {"id": "TC-002", "linked_req": "REQ-001"}, {"id": "TC-003", "linked_req": "REQ-001"}],
     "kpis": [{"id": "KPI-001", "description": "Mode Select Rate ≥85%"}, {"id": "KPI-002", "description": "Retention +25%"}]
   }
 }

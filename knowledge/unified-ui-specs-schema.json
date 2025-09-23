@@ -1,28 +1,28 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Dual-Mode Architecture Specification (v4)",
+  "title": "JSON Schema of Unified UI Specification Standard v1.0",
   "type": "object",
   "properties": {
     "schema_version": {
       "type": "string",
       "description": "Version of this schema section.",
-      "example": "v1.0"
+      "examples": ["v1.0"]
     },
 
     "artifact_card": {
       "type": "object",
       "description": "Metadata card describing the artifact and links.",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
-        "id": {"type": "string", "description": "Unique identifier of the artifact.", "example": "YMTL-ModeSelection-001"},
-        "title": {"type": "string", "description": "Title of the screen or artifact.", "example": "Mode Selection Screen"},
-        "version": {"type": "string", "description": "Semantic version of the artifact.", "pattern": "^v\\d+\\.\\d+\\.\\d+$", "example": "v1.3.0"},
-        "owners": {"type": "array", "description": "List of owners responsible for the artifact.", "items": {"type": "string"}, "example": ["@product", "@design", "@dev"]},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
+        "id": {"type": "string", "description": "Unique identifier of the artifact.", "examples": ["UUISS-ModeSelection-001"]},
+        "title": {"type": "string", "description": "Title of the screen or artifact.", "examples": ["Mode Selection Screen"]},
+        "version": {"type": "string", "description": "Semantic version of the artifact.", "pattern": "^v\\d+\\.\\d+\\.\\d+$", "examples": ["v1.3.0"]},
+        "owners": {"type": "array", "description": "List of owners responsible for the artifact.", "items": {"type": "string"}, "examples": [["@product", "@design", "@dev"]]},
         "status": {
           "type": "string",
           "description": "Current status of the artifact.",
           "enum": ["Draft", "Ready", "Approved", "Implemented"],
-          "example": "Approved"
+          "examples": ["Approved"]
         },
         "links": {
           "type": "object",
@@ -44,8 +44,8 @@
           "items": {
             "type": "object",
             "properties": {
-              "name": {"type": "string", "example": "iOS"},
-              "min_version": {"type": "string", "example": "16"},
+              "name": {"type": "string", "examples": ["iOS"]},
+              "min_version": {"type": "string", "examples": ["16"]},
               "notes": {"type": "string"}
             },
             "required": ["name", "min_version"]
@@ -59,7 +59,7 @@
     "purpose_and_principles": {
       "type": "object",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "goal": {"type": "string"},
         "kpis": {
           "type": "array",
@@ -88,7 +88,7 @@
     "composition_and_hierarchy": {
       "type": "object",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "focus_order": {"type": "array", "items": {"type": "string"}},
         "regions": {
           "type": "array",
@@ -123,7 +123,7 @@
       "type": "object",
       "description": "Unified token definition (direct DTCG or external store reference).",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "source_type": {"type": "string", "enum": ["inline", "external"], "description": "Defines whether tokens are inline or external."},
         "store": {"type": "string", "description": "Path to external token store (DTCG JSON)"},
         "tokens": {
@@ -132,7 +132,13 @@
             "^[a-zA-Z0-9/_-]+$": {
               "type": "object",
               "properties": {
-                "$value": {"type": ["string", "number", "object"]},
+                "$value": {
+                  "anyOf": [
+                    {"type": "string"},
+                    {"type": "number"},
+                    {"type": "object"}
+                  ]
+                },
                 "$type": {
                   "type": "string",
                   "enum": ["color", "gradient", "dimension", "typography", "shadow", "radius", "space", "icon", "shape"]
@@ -155,7 +161,7 @@
       "type": "object",
       "description": "Interaction states, theme variants, and behavior definitions.",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "states": {
           "type": "array",
           "items": {"type": "string", "enum": ["default", "hover", "focus", "pressed", "disabled", "loading", "error", "success", "empty", "invalid", "masked"]}
@@ -180,9 +186,14 @@
       "items": {
         "type": "object",
         "properties": {
-          "event": {"type": "string", "pattern": "^[a-z0-9]+_[a-z0-9]+$", "example": "mode_selected"},
+          "event": {"type": "string", "pattern": "^[a-z0-9]+_[a-z0-9]+$", "examples": ["mode_selected"]},
           "condition": {"type": "string"},
-          "ui_action": {"type": ["string", "array"], "items": {"type": "string"}},
+          "ui_action": {
+            "anyOf": [
+              {"type": "string"},
+              {"type": "array", "items": {"type": "string"}}
+            ]
+          },
           "navigation": {"type": "string"},
           "animation": {"type": "string"},
           "analytics_event": {"type": "string"}
@@ -194,7 +205,7 @@
     "accessibility": {
       "type": "object",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "touch_targets": {
           "type": "object",
           "properties": {
@@ -232,7 +243,7 @@
     "i18n": {
       "type": "object",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "icu_keys": {"type": "array", "items": {"type": "string"}},
         "constraints": {"type": "string"},
         "rtl_support": {"type": "boolean"},
@@ -248,7 +259,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "event": {"type": "string", "pattern": "^[a-z0-9]+_[a-z0-9]+$", "example": "mode_selected"},
+          "event": {"type": "string", "pattern": "^[a-z0-9]+_[a-z0-9]+$", "examples": ["mode_selected"]},
           "properties": {"type": "array", "items": {"type": "string"}},
           "owner": {"type": "string"},
           "pii": {"type": "boolean"},
@@ -317,7 +328,7 @@
       "type": "object",
       "description": "Mapping to personas, PRDs, requirements, test cases, and KPIs.",
       "properties": {
-        "schema_version": {"type": "string", "example": "v1.0"},
+        "schema_version": {"type": "string", "examples": ["v1.0"]},
         "personas": {"type": "array", "items": {"type": "string"}},
         "prd": {"type": "string"},
         "requirements": {

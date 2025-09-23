@@ -1,13 +1,13 @@
-# 🧭 YMTL-Design-Screen-001 — “Dual-Mode Architecture Specification” — v1.0.0
+# 🧭 UUISS-Design-Screen-001 — “Dual-Mode Architecture Specification” — v1.0.0
 
-**👥 Owners:** @product @design @dev • **Status:** Implemented  
-**🎨 Figma:** figma-screen-dual-mode-choose • **📌 Jira:** YMTL-1  
-**🔗 Links:** PRD-001, Personas P01/P02 • **🚀 Release:** MVP  
-**🧩 Platforms:** Android / iOS / Web  
+**👥 Owners:** @product @design @dev • **Status:** Implemented
+**🎨 Figma:** figma-screen-dual-mode-choose • **📌 Jira:** UUISS-1
+**🔗 Links:** PRD-001, Personas P01/P02 • **🚀 Release:** MVP
+**🧩 Platforms:** Android ≥13, iOS ≥16, Web ≥Chrome 120
 
 ## 🎯 Goal & Context
 
-Provide a clear separation of clinical and wellness experiences so users can select the appropriate mode immediately after onboarding.  
+Provide a clear separation of clinical and wellness experiences so users can select the appropriate mode immediately after onboarding.
 **📈 KPI targets:** Mode Select Rate ≥85%; Retention ≥25%; PHQ-9 Completion ratio = 1.0.
 
 ## 🧱 Composition
@@ -44,8 +44,8 @@ Provide a clear separation of clinical and wellness experiences so users can sel
 ## 🖱️ Interactions
 
 - `tap_card` → condition `mode.available==true` → actions `highlightCard`, `hapticLight` → navigation `route:/mode/{clinical|wellness}` → animation `slide-right-300ms`
-- `swipe_between_cards` → condition `platform in {tablet,desktop}` → action `showNextCard` → navigation `none` → animation `fade-200ms`
-- `long_press_card` → condition `always` → action `openModal:modeDetails` → navigation `modal:/modeDetails` → animation `scale-up-250ms`
+- `swipe_cards` → condition `platform in {tablet,desktop}` → action `showNextCard` → navigation `none` → animation `fade-200ms`
+- `long_press` → condition `always` → action `openModal:modeDetails` → navigation `modal:/modeDetails` → animation `scale-up-250ms`
 - `keyboard_enter` → condition `focusVisible==true` → action `selectMode` → navigation `route:/mode/{clinical|wellness}` → animation `focusRingPulse-200ms`
 - `tap_info` → condition `always` → action `openModal:modeDifferences` → navigation `modal:/modeDifferences` → animation `fade-in-200ms`
 - `tap_footer` → condition `always` → action `ripple` → navigation `route:/settings|/help` → animation `scale-150ms`
@@ -68,10 +68,10 @@ Provide a clear separation of clinical and wellness experiences so users can sel
 
 ## 📊 Analytics
 
-- `mode_selection_screen_view` — properties: source, previous_mode — owner @analytics — PII: none
+- `screen_view` — properties: source, previous_mode — owner @analytics — PII: none
 - `mode_selected` — properties: selected_mode, selection_time — owner @product — PII: none
-- `mode_info_viewed` — properties: mode, view_duration — owner @design — PII: none
-- `mode_switch_initiated` — properties: from_mode, to_mode — owner @dev — PII: none
+- `info_viewed` — properties: mode, view_duration — owner @design — PII: none
+- `mode_switched` — properties: from_mode, to_mode — owner @dev — PII: none
 
 ## ⚠️ Edge Cases
 
@@ -85,7 +85,7 @@ Provide a clear separation of clinical and wellness experiences so users can sel
 
 **Scenario AC-001 — Successful clinical selection**
 
-```
+```txt
 Given user is on Mode Selection
 When user taps Clinical
 Then app routes to Clinical Chat
@@ -96,7 +96,7 @@ Traceability: TC-001
 
 **Scenario AC-002 — Offline selection**
 
-```
+```txt
 Given device is offline
 When user selects a mode
 Then choice is cached
@@ -107,7 +107,7 @@ Traceability: TC-002
 
 **Scenario AC-003 — Contract validation**
 
-```
+```txt
 Given invalid mode in API response
 When processed
 Then error state shown
@@ -126,8 +126,8 @@ Traceability: TC-003
 
 - 👤 **Personas:** P01 (Clinical user), P02 (Wellness user)
 - 📄 **PRD:** PRD-001 (Dual-Mode Requirements)
-- 📌 **Requirements:** REQ-ARC-001 (Architecture Separation)
-- 🧪 **Test cases:** TC-001, TC-002, TC-003 (linked to REQ-ARC-001)
+- 📌 **Requirements:** REQ-001 (Architecture Separation)
+- 🧪 **Test cases:** TC-001, TC-002, TC-003 (linked to REQ-001)
 - 🎯 **KPIs:** KPI-001 (Mode Select Rate ≥85 %), KPI-002 (Retention +25 %)
 
 ## 📝 Notes
