@@ -1,6 +1,6 @@
-![Unified UI Specs banner](assets/banner.png)
-
 # 🌐 Unified UI Specs v1
+
+<img src="assets/banner.png" alt="Unified UI Specs banner" width="480" style="display:block; margin:0 auto; max-width:100%; height:auto;"/>
 
 Unified UI Specs defines a machine-readable standard for screen and flow specifications that keeps product, design, and engineering teams aligned. The standard is grounded in ISO 9241 interaction principles, WCAG 2.2 AA accessibility, and the W3C Design Tokens Community Group format so that every artifact captures intent, interaction, and compliance in one place.
 
@@ -10,22 +10,22 @@ Unified UI Specs defines a machine-readable standard for screen and flow specifi
 - Bake accessibility, i18n, analytics, and QA requirements into the same artifact.
 - Validate design intent automatically using the bundled JSON Schema and example spec.
 
-## 🗂️ Repository layout
-
-- [`knowledge/unified-ui-specs-standard.md`](knowledge/unified-ui-specs-standard.md) — Full narrative standard covering required sections, states, and traceability rules.
-- `knowledge/unified-ui-specs-schema.json` — JSON Schema (draft 2020-12) enforcing the standard for machine validation.
-- [`knowledge/unified-ui-specs-example.json`](knowledge/unified-ui-specs-example.json) — Reference implementation of a compliant screen spec.
-- [`knowledge/unified-ui-specs-human-example.md`](knowledge/unified-ui-specs-human-example.md) — Human-readable walk-through of the sample spec.
-- `docs/article/` — Practitioner-friendly articles ([English](docs/article/unified-ui-specs-article-en_US.md), [Russian](docs/article/unified-ui-specs-article-ru_RU.md)).
-- `docs/paper/` — Extended research papers ([English](docs/paper/unified-ui-specs-paper-en_US.md), [Russian](docs/paper/unified-ui-specs-paper-ru_RU.md)).
-- `pdf/` — Exported PDF versions suitable for circulation.
-
 ## 🔗 Quick references
 
 - Full standard text — [`knowledge/unified-ui-specs-standard.md`](knowledge/unified-ui-specs-standard.md)
 - Example structured screen spec — [`Section 2`](knowledge/unified-ui-specs-standard.md#2-example-screen-spec) inside the standard document
 - JSON representation — [`knowledge/unified-ui-specs-example.json`](knowledge/unified-ui-specs-example.json)
 - Human-readable walkthrough — [`knowledge/unified-ui-specs-human-example.md`](knowledge/unified-ui-specs-human-example.md)
+
+## 🗂️ Repository layout
+
+- [`knowledge/unified-ui-specs-standard.md`](knowledge/unified-ui-specs-standard.md) — Full narrative standard covering required sections, states, and traceability rules.
+- `knowledge/unified-ui-specs-schema.json` — JSON Schema (draft 2020-12) enforcing the standard for machine validation.
+- [`knowledge/unified-ui-specs-example.json`](knowledge/unified-ui-specs-example.json) — Reference implementation of a compliant screen spec.
+- [`knowledge/unified-ui-specs-human-example.md`](knowledge/unified-ui-specs-human-example.md) — Human-readable walk-through of the sample spec.
+- `docs/article/` — Practitioner-friendly articles ([🇺🇸 English](docs/article/unified-ui-specs-article-en_US.md), [🇷🇺 Russian](docs/article/unified-ui-specs-article-ru_RU.md)).
+- `docs/paper/` — Extended research papers ([🇺🇸 English](docs/paper/unified-ui-specs-paper-en_US.md), [🇷🇺 Russian](docs/paper/unified-ui-specs-paper-ru_RU.md)).
+- `docs/pdf/` — Exported PDF versions suitable for circulation.
 
 ## 🚀 Getting started
 
@@ -63,7 +63,7 @@ ajv validate \
 
 - Propose changes in `knowledge/unified-ui-specs-standard.md` and mirror required updates in the schema and example.
 - Keep semantic versioning on both the specification artifact and the schema itself.
-- Add localized articles or PDFs inside `docs/` and `pdf/` as needed; keep filenames language-tagged (e.g. `en_US`, `ru_RU`).
+- Add localized articles or PDFs inside `docs/` and `docs/pdf/` as needed; keep filenames language-tagged (e.g. `en_US`, `ru_RU`).
 
 ## 📝 License
 
