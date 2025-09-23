@@ -1,32 +1,36 @@
-# The UI Spec Standard That Actually Works 🚀
+# 🚀 The UI Spec Standard That Actually Works
+
 ## A Pragmatic Framework for Design-to-Dev Handoffs
 
-### Why This Matters 💡
+### 💡 Why This Matters
 
 Design handoffs fail. Engineers rebuild screens three times. PMs wonder why shipped features don't match Figma. This framework fixes that through **machine-readable specifications** that compile directly to platform code.
 
 Key wins:
+
 - **50% faster implementation** through deterministic specs
-- **Zero accessibility debt** via built-in WCAG compliance  
+- **Zero accessibility debt** via built-in WCAG compliance
 - **Automated testing** from specification to production
 
 ---
 
-## Core Architecture 🏗️
+## 🏗️ Core Architecture
 
 ### Artifact Structure
-```
-YMTL-<Domain>-<Screen>-<Sequence>
+
+```txt
+UUISS-<Domain>-<Screen>-<Sequence>
 v1.2.3 | @owner | Status: Ready
 ```
 
 Each spec contains four critical layers:
+
 1. **Metadata** - Ownership, versioning, platform targets
 2. **Composition** - Component hierarchy with design tokens
-3. **Behavior** - State machines and interactions  
+3. **Behavior** - State machines and interactions
 4. **Validation** - Test scenarios and edge cases
 
-### Design Tokens That Scale 🎨
+### 🎨 Design Tokens That Scale
 
 Leverage W3C DTCG format for seamless tool exchange:
 
@@ -43,9 +47,10 @@ Platform overrides maintain native feel while ensuring consistency. Android gets
 
 ---
 
-## State Management Done Right 🔄
+## 🔄 State Management Done Right
 
 ### Standard State Vocabulary
+
 - **Default** → **Hover** → **Pressed** → **Success/Error**
 - **Loading** states with skeleton screens
 - **Empty** states with actionable CTAs
@@ -54,6 +59,7 @@ Platform overrides maintain native feel while ensuring consistency. Android gets
 ### Interaction Patterns
 
 Define behaviors declaratively:
+
 ```yaml
 on_click:
   condition: user.authenticated
@@ -66,14 +72,16 @@ Complex flows support compound logic: `(feature.enabled && user.premium) || user
 
 ---
 
-## Accessibility as First-Class Citizen ♿
+## ♿ Accessibility as First-Class Citizen
 
 ### Touch Targets
+
 - **iOS**: 44pt minimum
 - **Android**: 48dp baseline
 - **Web**: 44px recommended
 
 ### WCAG 2.2 Compliance
+
 - **4.5:1** contrast for body text
 - **3:1** for interactive elements
 - **Focus indicators** never rely solely on color
@@ -81,10 +89,11 @@ Complex flows support compound logic: `(feature.enabled && user.premium) || user
 
 ---
 
-## Internationalization That Scales 🌍
+## 🌍 Internationalization That Scales
 
 ### ICU MessageFormat
-```
+
+```txt
 {count, plural,
   =0 {No items}
   one {# item}
@@ -93,15 +102,17 @@ Complex flows support compound logic: `(feature.enabled && user.premium) || user
 ```
 
 ### RTL Support
+
 - Mirrored layouts with `start/end` positioning
 - 120% text expansion buffer for Romance languages
 - 200% for German compounds
 
 ---
 
-## Quality Assurance Integration 🧪
+## 🧪 Quality Assurance Integration
 
 ### BDD Scenarios
+
 ```gherkin
 Given user has valid credentials
 When login button is tapped
@@ -111,6 +122,7 @@ Then dashboard displays within 2 seconds
 ### Edge Case Coverage
 
 Standard scenarios every screen must handle:
+
 - **Network failure** → Retry with exponential backoff
 - **Empty state** → Contextual empty illustration
 - **Partial data** → Progressive rendering
@@ -118,22 +130,25 @@ Standard scenarios every screen must handle:
 
 ---
 
-## Analytics Architecture 📊
+## 📊 Analytics Architecture
 
 ### Event Taxonomy
+
 `object_action` naming with minimal PII:
+
 - `button_clicked`
 - `screen_viewed`
 - `form_submitted`
 
 ### Performance Metrics
+
 - **Client**: FCP, LCP, TTI, CLS
 - **Server**: p50/p90/p95 latencies
 - **Business**: Conversion funnels, engagement rates
 
 ---
 
-## API Contract Specification 🔧
+## 🔧 API Contract Specification
 
 ```yaml
 endpoint: /api/v2/users/{id}
@@ -147,12 +162,12 @@ Schema references link to versioned registries enabling contract testing and bac
 
 ---
 
-## Implementation Playbook 🚀
+## 🚀 Implementation Playbook
 
 ### Adoption Strategy
 
 1. **Pilot** with greenfield features
-2. **Validate** with low-risk projects  
+2. **Validate** with low-risk projects
 3. **Scale** after proving ROI
 4. **Retrofit** legacy interfaces incrementally
 
@@ -166,6 +181,7 @@ Schema references link to versioned registries enabling contract testing and bac
 ### Governance Model
 
 **Three-party ownership**:
+
 - **Product** defines success metrics
 - **Design** crafts experience
 - **Engineering** ensures feasibility
@@ -174,7 +190,7 @@ Change management requires impact analysis, version bumps, and stakeholder sign-
 
 ---
 
-## Bottom Line 🎯
+## 🎯 Bottom Line
 
 This framework transforms UI development from artisanal guesswork to engineering discipline. Teams ship faster, with fewer bugs, and better accessibility. The specification becomes the single source of truth—no more "what did design mean by this?"
 
