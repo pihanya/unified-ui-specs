@@ -1,0 +1,109 @@
+# YAML configuration for markdownlint-cli2
+# -------------------------------------------------
+# This ruleset codifies documentation standards
+# See https://github.com/DavidAnson/markdownlint for rule details.
+
+default: true
+
+
+# MD001: Heading levels should only increment by one level at a time
+MD001: true
+
+# MD002: First heading should be a H1
+MD002: true
+
+# MD003: Use ATX-style headings (#)
+MD003:
+  style: atx
+
+# MD004: Unordered list marker should be dash (-)
+MD004:
+  style: dash
+
+# MD007: Unordered list indentation should be 2 spaces
+MD007:
+  indent: 2
+
+# MD009: No trailing spaces
+MD009:
+  br_spaces: 0
+  strict: true
+
+# MD010: No hard tabs outside code blocks
+MD010:
+  code_blocks: false
+
+# MD012: No multiple consecutive blank lines
+MD012: true
+
+# MD013: Disable line-length rule (allow long lines)
+MD013: false
+
+# MD018: Space required after # in ATX headings
+MD018: true
+
+# MD019: Exactly one space after # in ATX headings
+MD019: true
+
+# MD022: Headings should be surrounded by blank lines
+MD022: true
+
+# MD024: No duplicate headings within the same document
+MD024: true
+
+# MD025: Only one H1 per document
+MD025: true
+
+# MD029: Ordered list item prefix style 'one' (always '1.')
+MD029:
+  style: one_or_ordered
+
+# MD030: Consistent spacing after list markers
+MD030:
+  ul_single: 1
+  ul_multi: 1
+  ol_single: 1
+  ol_multi: 1
+
+# MD031: Fenced code blocks should be surrounded by blank lines
+MD031: true
+
+# MD032: Lists should be surrounded by blank lines
+MD032: true
+
+# MD033: No inline HTML
+MD033: false
+
+# MD034: Disallow bare URLs
+MD034: true
+
+# MD036: Use heading-style links
+MD036: false
+
+# MD040: Fenced code blocks should have a language specified
+MD040: true
+
+# MD041: First line should be a top-level heading
+MD041: true
+
+# MD042: No empty links
+MD042: true
+
+# MD046: Use fenced code blocks (not indented)
+MD046:
+  style: fenced
+
+# MD047: File should end with a single newline
+MD047: true
+
+# MD048: Code fences should use backticks
+MD048:
+  style: backtick
+
+# MD049: Emphasis style should use asterisks (*)
+MD049:
+  style: asterisk
+
+# MD050: Strong style should use asterisks (**)
+MD050:
+  style: asterisk
